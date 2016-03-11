@@ -1,0 +1,25 @@
+// Module Variables ("vars"):
+// --------------------------------
+{{ vars | to_nice_json }} 
+
+
+// Environment Variables ("environment"):
+// --------------------------------
+{{ environment | to_nice_json }} 
+
+
+// GROUP NAMES Variables ("group_names"):
+// --------------------------------
+{{ group_names | to_nice_json }}
+
+
+// GROUPS Variables ("groups"):
+// --------------------------------
+{{ groups | to_nice_json }}
+
+
+// HOST Variables ("hostvars"):
+// --------------------------------
+## bug in Ansible 2 https://github.com/ansible/ansible/issues/14542
+## the following no longer works in version 2 no fix yet 11.03.2016
+## hostvars | to_nice_json ## 

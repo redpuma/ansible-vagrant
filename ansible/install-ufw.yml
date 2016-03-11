@@ -1,0 +1,9 @@
+---
+#
+# playbook: install-ufw.yml
+#
+#
+- hosts:
+    - ubuntu-server
+  roles:
+    - { role: install-ufw, become: yes }

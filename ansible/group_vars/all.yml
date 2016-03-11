@@ -1,0 +1,12 @@
+---
+#
+# Site global variables file.
+#
+# Any variables defined in this file will be picked up by *all*
+# playbooks.
+#
+
+
+#-----------------------------------------------------------------------
+# Application-specific settings for all environments
+#-----------------------------------------------------------------------

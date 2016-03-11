@@ -1,0 +1,50 @@
+---
+- name: Create an Ansible user
+  user: name=ansible
+        groups=admin
+        generate_ssh_key=yes
+        ssh_key_bits=2048
+        ssh_key_file=.ssh/id_rsa
+        shell=/bin/bash
+
+- name: Enable ansible user to sudo without password
+  lineinfile: "dest=/etc/sudoers state=present regexp='^admin' line='%admin ALL=(ALL) NOPASSWD: ALL'"
+
+- name: Slurp Ansible SSH Keys
+  slurp:
+    src: "{{ item }}"
+  with_items:
+    - /home/ansible/.ssh/id_rsa.pub
+  register: ansible_public_keys
+  delegate_to: ans02.dev
+
+- name: Authorise Ansible public key on managed host
+  authorized_key:
+    user: ansible
+    key: "{{ item.content  | b64decode }}"
+    state: present
+    exclusive: yes
+  with_items: "{{ ansible_public_keys.results }}"
+  
+- name: "Gather public SSH Host Key of {{ hostip }}"
+  command: "ssh-keyscan {{ hostip }}"
+  register: hostip_key
+  
+- name: "Gather public SSH Host Key of {{ hostname }}"
+  command: "ssh-keyscan {{ hostname }}"
+  register: hostname_key
+
+- name: "Ensure {{ hostip }} in known_hosts on Ansible controller"
+  known_hosts:
+     name: "{{ hostip }}"
+     key: "{{ hostip_key.stdout }}"
+     path: /home/ansible/.ssh/known_hosts
+  delegate_to: ans02.dev  
+  
+- name: "Ensure {{ hostname }} in known_hosts on Ansible controller"
+  known_hosts:
+     name: "{{ hostname }}"
+     key: "{{ hostname_key.stdout }}"
+     path: /home/ansible/.ssh/known_hosts
+  delegate_to: ans02.dev
+  

@@ -1,0 +1,7 @@
+
+# ansible-vagrant
+# add these to your hosts file
+#
+192.168.168.160 ans02.dev
+
+192.168.168.151 ubt01.dev

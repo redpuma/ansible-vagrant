@@ -1,0 +1,11 @@
+---
+#
+# playbook: test.yml
+#
+# A playbook used for free-form testing.
+#
+- hosts:
+    - ansible-controllers
+    - ubuntu-server
+  roles:
+    - { role: test-vars }

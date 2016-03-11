@@ -1,0 +1,10 @@
+---
+# tasks file for test-vars role
+
+- name:    Dump vars formatted to terminal
+  debug:   var=hostvars[inventory_hostname]
+
+- name:     Dump vars to file as JSON
+  template:
+    src:  dump_variables_json
+    dest: "/tmp/{{ inventory_hostname }}_ansible_variables.json"

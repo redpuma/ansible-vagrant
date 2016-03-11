@@ -1,0 +1,11 @@
+---
+
+# 
+# Ansible playbook for provisioning vagrant environment Ubuntu Server
+#
+
+- hosts: ubt01.dev
+  gather_facts: yes
+  roles:
+    - { role: ansible-managed, hostname: "ubt01.dev", hostip: "192.168.168.151", become: yes }
+

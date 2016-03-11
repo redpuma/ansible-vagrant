@@ -1,0 +1,9 @@
+#
+# Hosts file for 'localdev' vagrant-based environments.
+#
+
+[ansible-controllers]
+localhost ansible_connection=local
+
+[ubuntu-server]
+192.168.168.151

@@ -1,0 +1,21 @@
+---
+
+- name: Install software-properties-common in order to manage the repositories that you install software from.
+  apt: name=software-properties-common state=present update_cache=yes
+
+- name: Add Ansible PPA
+  apt_repository: repo='ppa:ansible/ansible'
+
+- name: Install Ansible
+  apt: name=ansible state=present update_cache=yes
+
+- name: Create an Ansible user
+  user: name=ansible
+        groups=admin
+        generate_ssh_key=yes
+        ssh_key_bits=2048
+        ssh_key_file=.ssh/id_rsa
+        shell=/bin/bash
+
+- name: Enable ansible user to sudo without password
+  lineinfile: "dest=/etc/sudoers state=present regexp='^admin' line='%admin ALL=(ALL) NOPASSWD: ALL'"
